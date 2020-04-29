@@ -2,10 +2,25 @@
 with orders as (
     SELECT * FROM {{ref('stg_jaffle_shop__orders')}}
 )
+, payments as (
+    select * from {{ref('stg_stripe_payments')}}
+)
 
-SELECT o.*
-    ,sum(p.amount) as amount
-FROM orders o
-LEFT JOIN {{ref('stg_stripe_payments')}} p
-ON o.order_id = p.order_id
-GROUP BY 1,2,3,4
+, total_paid as (
+    select 
+        order_id
+        ,sum(amount) as amount
+        FROM payments
+        group by 1
+)
+
+,joined as (
+
+    SELECT *
+    FROM orders o
+    LEFT JOIN total_paid p
+        USING (order_id)
+
+    )
+
+select * from joined
