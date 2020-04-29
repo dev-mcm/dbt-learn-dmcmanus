@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: jaffle_shop
+    database: raw
+    loader: fishtown #optional, informational only
+    description: Information related to the shadowy jaffle trade
+    
+    freshness:
+      warn_after: {count: 6, period: hour}
+      error_after: {count: 24, period: hour}
+
+    tables:
+      - name: customers
+        description: These addicts will do whatever it takes to obtain their coveted jaffles
+        freshness: null
+
+      - name: orders
+        description: You can have a jaffle, as a treat
+        loaded_at_field: _ETL_LOADED_AT
+        columns:
+          - name: ID
+            tests: 
+              - unique
+              - not_null
+         
+

@@ -5,4 +5,4 @@ SELECT
     ,p.amount/100 as amount
     ,p.created as created_dt
     ,p._batched_at as _batched_at_dt
-    from raw.stripe.payment p
+    from {{ source('stripe', 'payment')}}  p
