@@ -4,6 +4,7 @@ sources:
   - name: stripe
     database: raw
     tables:
+
       - name: payment
         columns: 
           - name: ID
@@ -11,3 +12,11 @@ sources:
             tests: 
               - not_null
               - unique
+
+  - name: learn_stripe
+    database: raw
+    tables:
+        
+      - name: charges
+
+      - name: refunds
