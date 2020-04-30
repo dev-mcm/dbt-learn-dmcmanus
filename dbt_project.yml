@@ -32,9 +32,16 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
     jaffle_shop:
+      vars:
+        payment_methods:
+          - bank_transfer
+          - coupon
+          - credit_card
+          - gift_card
       mart:
         materialized: table
       staging:
         materialized: view
         schema: stg
         tags: "staging"
+
